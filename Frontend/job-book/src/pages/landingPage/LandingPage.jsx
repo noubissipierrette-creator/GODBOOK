@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from './compoments/Header'
+import Hero from './compoments/Hero'
 
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div className='min-h-screen'>
+        <Header/>
+        <Hero/>
+    </div>
   )
 }
 
