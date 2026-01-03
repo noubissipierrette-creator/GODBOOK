@@ -2,6 +2,7 @@ import { motion } from'framer-motion';
 import { Search, ArrowRight, Users, Building2,TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+
 const Hero = () => {
     const isAuthenticated = true
   const user = {fullName: "Alex", role:"employer"}
@@ -9,7 +10,7 @@ const Hero = () => {
   const navigate = useNavigate()
 
   const stats = [
-    { icon: Users, label:'Active Users', value:'2.4M+' },
+    { icon: Users,label:'Active Users', value:'2.4M+' },
     { icon: Building2, label: 'companies', value:'50K+' },
     { icon: TrendingUp, label:'jobs posted',value:'150K+' }
   ];
