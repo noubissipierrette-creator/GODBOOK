@@ -64,7 +64,16 @@ const Analytics = () => {
                 viewport={{ once: true}}
                 className=""
                  >
-                
+                <div className="" >
+                    <div className={'w-12 h-12 bg-${stat.color}-100 rounded-xl flex items-center justify-center'}>
+                     <stat.icon className={'w-6 h-6 text-$stat.color}-600'}/>    
+                    </div>
+                     <span className="" >
+                        {stat.growth}
+                     </span>
+                    </div>    
+                   <h3 className="" >{stat.value}</h3> 
+                   <p className="" >{stat.title} </p>
                 </motion.div>
             ))}
         </div>
