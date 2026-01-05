@@ -26,9 +26,17 @@ import{
     });
 
     //Validation function
-    const validateEmail = (email) => {};
+    const validateEmail = (email) => {
+      if(!email.trim()) return 'Email is required';
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) return 'please enter a valid email address'
+      return'';
+    };
 
-    const validatePassword = (password) => {};
+    const validatePassword = (password) => {
+      if (!password) return 'password is required'
+      return '';
+    };
 
 //Handle input change
 const handleInputChange = (e) => {
@@ -48,8 +56,17 @@ const handleInputChange = (e) => {
 
 const validateForm = () => {
   const errors ={
-    email:
-  }
+    email:validateEmail(formData.email),
+    password:validatePassword(formData.password)
+  };
+
+  //Remove empty errors
+  Object.keys(errors).forEach(key => {
+    if(!errors[key])delete errors[key];
+  });
+
+  setFormState(prev => ({...prev, errors}));
+  return Object.keys(errors).length === 0;
 };
 
 const handleSubmit = async (e) => {
@@ -72,6 +89,27 @@ const handleSubmit = async (e) => {
     }))
   }
 };
+
+    if (formState.success){
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+        <motion.div
+           initial={{ opacity:0, scale:0.9 }}
+           animate={{ opacity:1, scale:1 }}
+           className="bg-white p-8 roubed-xl shadow-lg max-w-md w-full text-center"
+           >
+          < CheckCircle className=" w-16 h-16 text-green-500 mx-auto mb-4 "/>
+          <h2 className=" text-2xl font-bold text-gray-900 mb-2 " >welcome Back!</h2>
+          <p className=" text-gray-600 mb-4">
+            you have been successfully logged in.
+          </p>
+          <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
+          <p className="text-sm text-gray-500 mt-2">Redirectoing to your daschboard</p>
+          </motion.div>
+          </div>
+      );
+    }
+          
 
   return (
     <div className=" min-h-screen flex items-center justify-center bg-gray-50 px-4">
