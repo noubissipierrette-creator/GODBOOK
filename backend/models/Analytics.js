@@ -1,0 +1,13 @@
+const mongoose = require("mongoose");
+
+const analyticsSchema = new mongoose.Schema(
+    {
+        employer: { type: mongoose.Schema.TypesObjectId, ref: "User", required: true },
+        totalJobsPosted: { type:Number, default: 0 },
+        totalApplicationReceived: { type: Number, default: 0  },
+        totalHired: { type: Number, default: 0 },
+    },
+    { timestamps: true }
+);
+
+module.exports = mongoose.model("Analytics", analyticsSchema);
