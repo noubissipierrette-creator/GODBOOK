@@ -10,8 +10,10 @@ import {
   CheckCircle
 } from "lucide-react";
 import { validateEmail } from "../../Utils/helper";
+import axiosInstance from "../../Utils/axiosinstance";
 
 const Login = () => {
+  const {login} = useAuth()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -69,6 +71,39 @@ const Login = () => {
     setFormState(prev => ({ ...prev, loading: true }));
 
     try {
+      const response = await axiosInstance.post(API_PATHS,AUTH,LOGIN,{
+        email:formData.email,
+        password: formData.password,rememberMe
+      });
+      setFormState(prev => ({
+
+        ...prev,
+        loading: false,
+        success: true,
+        erroes: {}
+      }));
+
+      const { token, role } = response.date;
+
+      if(token) {
+        Login(response.data, token);
+        //redirect based on role
+        setTimeout(() => {
+          window.location.href = 
+          role === "employer"
+          ? "/emplyer-dashboard"
+          : "/find-jobs";
+        },2000);
+      }
+
+        //redirect based on user role
+        setTimeout(() => {
+          const redirectpath = User.role === 'employer'
+          ? '/employer-dashboard'
+          : '/find-jobs';
+          window.location.href = redirectpath;
+        }, 1500);
+
       // MERN API Integration Placeholder
       // const response = await axios.post('/api/auth/login', formData);
       // localStorage.setItem('token', response.data.token);

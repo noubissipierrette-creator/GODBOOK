@@ -114,7 +114,11 @@ const SignUp = () => {
 
     } catch (error) {
       console.log("error", error);
-
+  // Upload image if prsent
+  if (formData.avatar) {
+    const imgUploadRes = await uploadImage(formData.avatar);
+    avatarUrl = 
+  }
       setFormState((prev) => ({
         ...prev,
         loading: false,

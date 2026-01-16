@@ -7,4 +7,6 @@ const saveJobSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+
 module.exports = mongoose.model("SavedJob", saveJobSchema);
