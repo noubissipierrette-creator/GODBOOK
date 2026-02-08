@@ -6,7 +6,7 @@ const User = require("../models/User");
     try{
         let token = req.headers.authorization;
 
-        if (token && token.starsWith("Bearer")) {
+        if (token && token.startsWith("Bearer")) {
             token = token.split(" ")(1); //Extract token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = await User.findById(decoded.id).select("-password");

@@ -1,6 +1,6 @@
 const Job = require("../models/job");
 const Application = require("../models/Application");
-const { createSessionStorage } = require("react-router-dom");
+//const { createSessionStorage } = require("react-router-dom");
 
 const getTrend = (current, previous) => {
     if (previous === 0) return current > 0 ? 100: 0;
@@ -35,14 +35,14 @@ exports.getEmployerAnalytics = async (req, res) => {
 
         //Active job ports trend
         const activeJobslast7 = await Job.countDocuments({
-            company: companyId,
-            createAt: { $gte: last7Days, $lte: now },
-        });
+    company: companyId,
+    createdAt: { $gte: last7Days, $lte: now },
+});
 
         const activeJobsPrev7 = await Job.countDocuments({
-            company: companyId,
-            createdAt:{ $gte: prev7days, $lt:last7Days },
-        });
+    company: companyId,
+    createdAt: { $gte: prev7days, $lt: last7Days },
+});
 
         const activeJobTrend = getTrend(activeJobslast7, activeJobsPrev7);
 
@@ -54,7 +54,7 @@ exports.getEmployerAnalytics = async (req, res) => {
 
         const applicationsPrev7 = await Application.countDocuments ({
             job: { $in: jobIds },
-            createsAt: { $gte: last7Days },
+            createdAt: { $gte: prev7days, $lt: last7Days },
         });
         
         const applicantTrend = getTrend(applicationslast7, applicationsPrev7);
@@ -66,9 +66,9 @@ exports.getEmployerAnalytics = async (req, res) => {
             createdAt: { $gte: last7Days, $lte: now  },
         });
 
-        const hiredPrev7 = await Application.countdocuments({
+        const hiredPrev7 = await Application.countDocuments({
             job: { $in: jobIds },
-            stauts: "Accepted",
+            status: "Accepted",
             createAt: { $gte: prev7Days, $lt: last7Days },
         });
          
@@ -76,14 +76,14 @@ exports.getEmployerAnalytics = async (req, res) => {
 
     // === DATA ===
         const recentJobs = await Job.find ({ company: companyId })
-        .sort({ createAt: -1 })
+        .sort({ createdAt: -1 })
         .limit(5)
         .select("title location type createAt isClosed");
 
         const recentApplications = await Application.find({
             job: { $in: jobIds },
         })
-        .sort({ createAt: -1 })
+        .sort({ createdAt: -1 })
         .limit(5)
         .populate("applicant", "name email avatar")
         .populate("job", "title");

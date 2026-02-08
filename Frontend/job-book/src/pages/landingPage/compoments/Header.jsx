@@ -4,8 +4,7 @@ import {  Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-    const isAuthenticated = true;
-  const user = { fullName: "Alex", role:"employer" } ;
+  const { user, isAuthenticated} = useAuth ()
   const navigate = useNavigate();
 
   return <motion.header

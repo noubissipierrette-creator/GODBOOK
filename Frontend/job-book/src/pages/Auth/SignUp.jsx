@@ -103,7 +103,7 @@ const SignUp = () => {
     return Object.keys(errors).length === 0;
    };
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
@@ -111,25 +111,46 @@ const SignUp = () => {
     setFormState((prev) => ({ ...prev, loading: true }));
 
     try {
+      // Upload image if present
+      let avatarUrl = '';
+      if (formData.avatar) {
+        const imgUploadRes = await uploadImage(formData.avatar);
+        avatarUrl = imgUploadRes.data.imageUrl;
+      }
 
+      // Call registration API
+      const response = await axiosInstance.post('/api/auth/register', {
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role.toLowerCase(),
+        avatar: avatarUrl,
+      });
+
+      // Handle successful registration
+      if (response.data) {
+        setFormState((prev) => ({ 
+          ...prev, 
+          loading: false, 
+          success: true 
+        }));
+        
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
+      }
     } catch (error) {
       console.log("error", error);
-  // Upload image if prsent
-  if (formData.avatar) {
-    const imgUploadRes = await uploadImage(formData.avatar);
-    avatarUrl = 
-  }
       setFormState((prev) => ({
         ...prev,
         loading: false,
-        errors:{
-          submit:
-            error.response?.data?.message ||
-            "Registration failed. Please try again.",
+        errors: {
+          submit: error.response?.data?.message || "Registration failed. Please try again.",
         },
-      }) );
-        }
-   };
+      }));
+    }
+  };
 
     if (formState.success) {
     return (

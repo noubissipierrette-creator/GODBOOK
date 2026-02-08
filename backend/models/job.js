@@ -11,7 +11,7 @@ const jobSchema = new mongoose.Schema(
             type: String,
             enum:["Remote", "Full-Time", "Internship", "Contact" ],
         },
-        compagy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //Employer
+        company: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //Employer
         
         salaryMin: { type: Number },
         salaryMax: { type: Number },

@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     useEffect (() => {
         checkAuthStatus();
     },[]);
-    const checkAuthStatus = async => {
+    const checkAuthStatus = async () => {
         try{
             const token = localStorage.getItem('token');
             const userStr = localStorage.getItem('user');
@@ -70,5 +70,5 @@ export const AuthProvider = ({ children }) => {
         checkAuthStatus,
     };
 
-    return <AuthContext.Provider value={value}>{value}</AuthContext.Provider>;
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
